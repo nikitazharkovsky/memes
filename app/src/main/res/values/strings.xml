@@ -6,4 +6,5 @@
     <string name="enter">ВОЙТИ</string>
     <string name="password_helper">Пароль должен содержать 6 символов</string>
     <string name="empty_field">Поле не может быть пустым</string>
+    <string name="auth_error">Во время запроса произошла ошибка, возможно вы неверно ввели логин/пароль</string>
 </resources>
