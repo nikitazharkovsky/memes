@@ -19,8 +19,8 @@ class SplashActivity : AppCompatActivity() {
         setLogo(layout, R.drawable.ic_surf_logo)
         setContentView(layout)
 
-//        var nextActivityIntent = Intent(this, LoginActivity::class.java)
-//        startActivityAfterDelay(nextActivityIntent, Constants.SPLASH_DELAY)
+        var nextActivityIntent = Intent(this, LoginActivity::class.java)
+        startActivityAfterDelay(nextActivityIntent, Constants.SPLASH_DELAY)
     }
 
     private fun createLayout(): RelativeLayout {

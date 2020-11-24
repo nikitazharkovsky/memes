@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Memes</string>
     <string name="surf_logo_description">Surf</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="enter">ВОЙТИ</string>
+    <string name="password_helper">Пароль должен содержать 6 символов</string>
+    <string name="empty_field">Поле не может быть пустым</string>
 </resources>
