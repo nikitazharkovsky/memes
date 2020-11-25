@@ -1,4 +1,4 @@
-package com.zharkovsky.memes.ui.home
+package com.zharkovsky.memes.ui.add
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.zharkovsky.memes.R
 
-class HomeFragment : Fragment() {
+class AddFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var addViewModel: AddViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        addViewModel =
+            ViewModelProvider(this).get(AddViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_add, container, false)
+        val textView: TextView = root.findViewById(R.id.text_add)
+        addViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
