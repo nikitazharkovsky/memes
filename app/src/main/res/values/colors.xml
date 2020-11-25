@@ -8,4 +8,6 @@
     <color name="background_material_dark">#ff0000</color>
     <color name="background">#23213F</color>
     <color name="errorBackground">#FF575D</color>
+    <color name="toolbar">#312F51</color>
+    <color name="bottom_background">#12102B</color>
 </resources>

@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".MainActivity"></activity>
         <activity
-            android:name=".activities.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activities.LoginActivity"></activity>
+        <activity
+            android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
