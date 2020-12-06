@@ -1,4 +1,4 @@
-package com.zharkovsky.memes
+package com.zharkovsky.memes.activities
 
 import android.os.Bundle
 import android.view.Menu
@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.zharkovsky.memes.R
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
 
-        val mToolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(mToolbar);
+//        val mToolbar = findViewById<Toolbar>(R.id.toolbar)
+//        setSupportActionBar(mToolbar);
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -9,9 +9,9 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.zharkovsky.memes.R
 import com.zharkovsky.memes.services.NetworkService
 import com.zharkovsky.memes.utils.ProgressButtonHelper
-import com.zharkovsky.memes.R
 import com.zharkovsky.memes.models.LoginUserRequestDto
 import com.zharkovsky.memes.models.AuthInfoDto
 import com.zharkovsky.memes.utils.Constants
@@ -121,23 +121,32 @@ class LoginActivity : AppCompatActivity() {
                     .login(request)
                     .enqueue(object : Callback<AuthInfoDto> {
                         override fun onResponse(call: Call<AuthInfoDto>, response: retrofit2.Response<AuthInfoDto>) {
-                            saveResponseToSharedPref(rootActivity, response.body()!!)
-//                            var nextActivityIntent = Intent(rootActivity, MainActivity::class.java)
-//                            startActivity(nextActivityIntent)
-//                            finish()
+                            if (response.code() != 200) {
+                                showSnackBar()
+                            } else {
+                                saveResponseToSharedPref(rootActivity, response.body()!!)
+                                var nextActivityIntent = Intent(rootActivity, MainActivity::class.java)
+                                startActivity(nextActivityIntent)
+                                finish()
+                            }
+                            runOnUiThread(progressButtonHelper::buttonFinished)
                         }
 
                         override fun onFailure(call: Call<AuthInfoDto>, t: Throwable) {
+                            showSnackBar()
+                            runOnUiThread(progressButtonHelper::buttonFinished)
+                        }
+
+                        private fun showSnackBar() {
                             val snackbar = Snackbar.make(
-                                    root,
-                                    getString(R.string.auth_error),
-                                    Snackbar.LENGTH_LONG
+                                root,
+                                getString(R.string.auth_error),
+                                Snackbar.LENGTH_LONG
                             )
                             snackbar.view.setBackgroundResource(R.color.errorBackground)
                             snackbar.show()
                         }
                     })
-            runOnUiThread(progressButtonHelper::buttonFinished)
         }, Constants.PROGRESS_BUTTON_DELAY)
     }
 

@@ -11,4 +11,6 @@
     <string name="add">Add</string>
     <string name="profile">Profile</string>
     <string name="Search">Поиск</string>
+    <string name="can_not_load_memes">Не удалось загрузить ленту</string>
+    <string name="try_again">Обновите экран или попробуйте позже</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.zharkovsky.memes.ui.add
+package com.zharkovsky.memes.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

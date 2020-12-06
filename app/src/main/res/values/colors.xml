@@ -10,4 +10,5 @@
     <color name="errorBackground">#FF575D</color>
     <color name="toolbar">#312F51</color>
     <color name="bottom_background">#12102B</color>
+    <color name="white">#FFF</color>
 </resources>

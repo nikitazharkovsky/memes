@@ -7,16 +7,16 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.zharkovsky.memes.ui.dashboard.DashboardFragment"
+        android:name="com.zharkovsky.memes.fragments.DashboardFragment"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_add"
-        android:name="com.zharkovsky.memes.ui.add.AddFragment"
+        android:name="com.zharkovsky.memes.fragments.AddFragment"
         tools:layout="@layout/fragment_add" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.zharkovsky.memes.ui.profile.ProfileFragment"
+        android:name="com.zharkovsky.memes.fragments.ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 </navigation>
