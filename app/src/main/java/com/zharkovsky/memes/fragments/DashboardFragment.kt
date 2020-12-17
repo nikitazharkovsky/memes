@@ -21,128 +21,118 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class DashboardFragment : Fragment() {
-
     private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var root: View
+    private lateinit var progressBar: ProgressBar
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var swipeContainer: SwipeRefreshLayout
+    private lateinit var mLayoutManager: StaggeredGridLayoutManager
+    private lateinit var errorLoadMemesTV: TextView
+    private lateinit var retryTV: TextView
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
-
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_dashboard)
-//        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
-        val progressBar = root.findViewById<ProgressBar>(R.id.dashboardProgressBar)
-        progressBar.visibility = View.VISIBLE
-
-        val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_list)
-        recyclerView.setHasFixedSize(true)
-        val mLayoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerView.layoutManager = mLayoutManager
-
-        InitialLoadMemes(recyclerView, root, progressBar)
-
-        val swipeContainer = root.findViewById(R.id.swipeContainer) as SwipeRefreshLayout
-        swipeContainer.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            LoadMemes(recyclerView, root, progressBar, swipeContainer)
-        })
-        swipeContainer.setColorSchemeResources(
-            android.R.color.holo_blue_bright,
-            android.R.color.holo_green_light,
-            android.R.color.holo_orange_light,
-            android.R.color.holo_red_light
-        )
-
+        initViews(inflater, container)
+        initViewProperties()
+        loadMemes(initial = true)
         return root
-
     }
 
-    private fun InitialLoadMemes(
-        recyclerView: RecyclerView,
-        root: View,
-        progressBar: ProgressBar
-    ) {
+    private fun initViews(inflater: LayoutInflater, container: ViewGroup?) {
+        dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
+        root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        progressBar = root.findViewById(R.id.dashboardProgressBar)
+        recyclerView = root.findViewById(R.id.recycler_list)
+        swipeContainer = root.findViewById(R.id.swipeContainer)
+        errorLoadMemesTV = root.findViewById(R.id.errorLoadMemesTV)
+        retryTV = root.findViewById(R.id.retryTV)
+        mLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+    }
+
+    private fun initViewProperties() {
+        progressBar.visibility = View.VISIBLE
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = mLayoutManager
+        swipeContainer.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        )
+        swipeContainer.setOnRefreshListener { loadMemes() }
+    }
+
+    private fun loadMemes(initial: Boolean = false) {
         NetworkService.getInstance()
                 .jsonApi
                 .memes()
-                .enqueue(object : Callback<List<MemDto>> {
-                    override fun onResponse(call: Call<List<MemDto>>, response: Response<List<MemDto>>) {
-                        println(response.code())
-                        val errorLoadMemesTV = root.findViewById<TextView>(R.id.errorLoadMemesTV)
-                        val retryTV = root.findViewById<TextView>(R.id.retryTV)
-                        if (response.code() != 200) {
-                            errorLoadMemesTV.text = getText(R.string.can_not_load_memes)
-                            retryTV.text = getText(R.string.try_again)
-                        } else {
-                            val memes = response.body()!!
-                            val adapter = DataAdapter(activity, memes.toMutableList())
-                            recyclerView.adapter = adapter
-                            errorLoadMemesTV.text = ""
-                            retryTV.text = ""
-                        }
-                        progressBar.visibility = View.GONE
-                    }
-
-                    override fun onFailure(call: Call<List<MemDto>>, t: Throwable) {
-                        progressBar.visibility = View.GONE
-                    }
-                })
+                .enqueue(callback(initial))
     }
 
-    private fun LoadMemes(
-        recyclerView: RecyclerView,
-        root: View,
-        progressBar: ProgressBar,
-        swipeContainer: SwipeRefreshLayout?
-    ) {
-        NetworkService.getInstance()
-            .jsonApi
-            .memes()
-            .enqueue(object : Callback<List<MemDto>> {
-                override fun onResponse(call: Call<List<MemDto>>, response: Response<List<MemDto>>) {
-                    println(response.code())
-                    val errorLoadMemesTV = root.findViewById<TextView>(R.id.errorLoadMemesTV)
-                    val retryTV = root.findViewById<TextView>(R.id.retryTV)
-                    if (response.code() != 200) {
-                        val errorLoadMemes = getText(R.string.can_not_load_memes)
-                        val retry = getText(R.string.try_again)
-                        showSnackBar("$errorLoadMemes \n $retry")
-                    } else {
-                        val memes = response.body()!!
-                        val adapter = recyclerView.adapter as DataAdapter;
-                        adapter.addAll(memes)
-                        errorLoadMemesTV.text = ""
-                        retryTV.text = ""
+    private fun callback(initial: Boolean = false): Callback<List<MemDto>> {
+        val errorLoadMemes = getText(R.string.can_not_load_memes)
+        val retry = getText(R.string.try_again)
+
+        return object : Callback<List<MemDto>> {
+            override fun onResponse(call: Call<List<MemDto>>, response: Response<List<MemDto>>) {
+                if (response.code() != 200) {
+                    when {
+                        initial -> {
+                            errorLoadMemesTV.text = errorLoadMemes
+                            retryTV.text = retry
+                        }
+                        else -> {
+                            showSnackBar("$errorLoadMemes \n $retry")
+                        }
                     }
-                    progressBar.visibility = View.GONE
-                    swipeContainer?.setRefreshing(false);
+                } else {
+                    val memes = response.body()!!
+                    when {
+                        initial -> {
+                            onInitialMemes(memes)
+                        }
+                        else -> {
+                            onMemes(memes)
+                        }
+                    }
+                    errorLoadMemesTV.text = ""
+                    retryTV.text = ""
                 }
+                progressBar.visibility = View.GONE
+                swipeContainer.isRefreshing = false
+            }
 
-                override fun onFailure(call: Call<List<MemDto>>, t: Throwable) {
-                    progressBar.visibility = View.GONE
-                    val errorLoadMemes = getText(R.string.can_not_load_memes)
-                    val retry = getText(R.string.try_again)
+            override fun onFailure(call: Call<List<MemDto>>, t: Throwable) {
+                progressBar.visibility = View.GONE
+                if (!initial) {
                     showSnackBar("$errorLoadMemes \n $retry")
-                    swipeContainer?.setRefreshing(false);
+                    swipeContainer.isRefreshing = false
                 }
+            }
 
-                private fun showSnackBar(str: String) {
-                    val snackbar = Snackbar.make(
+            private fun onInitialMemes(memes: List<MemDto>) {
+                val adapter = DataAdapter(activity, memes.toMutableList())
+                recyclerView.adapter = adapter
+            }
+
+            private fun onMemes(memes: List<MemDto>) {
+                val adapter = recyclerView.adapter as DataAdapter
+                adapter.addAll(memes)
+            }
+
+            private fun showSnackBar(str: String) {
+                val snackBar = Snackbar.make(
                         root,
                         str,
                         Snackbar.LENGTH_LONG
-                    )
-                    snackbar.view.setBackgroundResource(R.color.errorBackground)
-                    snackbar.show()
-                }
-            })
+                )
+                snackBar.view.setBackgroundResource(R.color.errorBackground)
+                snackBar.show()
+            }
+        }
     }
 }

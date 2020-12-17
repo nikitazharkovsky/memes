@@ -2,64 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    android:paddingTop="80dp"
     android:paddingLeft="16dp"
+    android:paddingTop="80dp"
     android:paddingRight="16dp"
     android:paddingBottom="24dp"
-    android:id="@+id/auth_layout"
     tools:context=".activities.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
-    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-        android:id="@+id/text_field_boxes_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        app:primaryColor="@color/colorSecondary"
-        app:secondaryColor="#8AFFFFFF"
-        app:panelBackgroundColor="#0DFFFFFF"
-        app:labelText="@string/login"
-        >
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-            android:id="@+id/extended_edit_text_login"
-            android:layout_width="wrap_content"
+        <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+            android:id="@+id/text_field_boxes_login"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#FFF"
-            />
+            android:paddingBottom="16dp"
+            app:labelText="@string/login"
+            app:panelBackgroundColor="@color/tfbBackground"
+            app:primaryColor="@color/colorSecondary"
+            app:secondaryColor="@color/tfbSecondaryColor">
 
-    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+            <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                android:id="@+id/extended_edit_text_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFF" />
 
-    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-        android:id="@+id/text_field_boxes_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:primaryColor="#1EF0D7"
-        app:secondaryColor="#8AFFFFFF"
-        app:helperTextColor="#FFF"
-        app:panelBackgroundColor="#0DFFFFFF"
-        app:endIcon="@drawable/ic_show"
-        app:labelText="@string/password"
-        app:helperText=" "
-        >
+        </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
-        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-            android:id="@+id/extended_edit_text_password"
-            android:layout_width="wrap_content"
+        <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+            android:id="@+id/text_field_boxes_password"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:textColor="#FFF"
-            />
+            app:endIcon="@drawable/ic_show"
+            app:helperText=" "
+            app:helperTextColor="#FFF"
+            app:labelText="@string/password"
+            app:panelBackgroundColor="@color/tfbBackground"
+            app:primaryColor="@color/colorSecondary"
+            app:secondaryColor="@color/tfbSecondaryColor">
 
-    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+            <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                android:id="@+id/extended_edit_text_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="#FFF" />
+
+        </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
     </LinearLayout>
 
     <include

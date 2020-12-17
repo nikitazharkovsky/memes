@@ -5,14 +5,8 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
 import com.zharkovsky.memes.R
-import com.zharkovsky.memes.models.AuthInfoDto
-import com.zharkovsky.memes.models.MemDto
-import com.zharkovsky.memes.services.NetworkService
 import com.zharkovsky.memes.utils.Constants
-import retrofit2.Call
-import retrofit2.Callback
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -25,7 +19,7 @@ class SplashActivity : AppCompatActivity() {
         setLogo(layout, R.drawable.ic_surf_logo)
         setContentView(layout)
 
-        var nextActivityIntent = Intent(this, MainActivity::class.java)
+        val nextActivityIntent = Intent(this, LoginActivity::class.java)
         startActivityAfterDelay(nextActivityIntent, Constants.SPLASH_DELAY)
     }
 

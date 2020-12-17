@@ -7,6 +7,7 @@ class AuthInfoDto {
     @SerializedName("accessToken")
     @Expose
     var accessToken: String? = null
+
     @SerializedName("userInfo")
     @Expose
     var userInfo: UserInfo? = null

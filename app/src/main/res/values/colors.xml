@@ -11,4 +11,9 @@
     <color name="toolbar">#312F51</color>
     <color name="bottom_background">#12102B</color>
     <color name="white">#FFF</color>
+    <color name="tfbBackground">#0DFFFFFF</color>
+    <color name="tfbSecondaryColor">#8AFFFFFF</color>
+    <color name="dashboardBackground">#23213f</color>
+    <color name="memeTextBackground">#1F2032</color>
+    <color name="recyclerBackground">#312f51</color>
 </resources>

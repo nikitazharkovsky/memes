@@ -16,15 +16,12 @@ class NetworkService private constructor() {
         }
     }
 
-    private val retrofit: Retrofit
+    private val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
     val jsonApi: JSONPlaceHolderApi
         get() = retrofit.create(JSONPlaceHolderApi::class.java)
 
-    init {
-        retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-    }
 }

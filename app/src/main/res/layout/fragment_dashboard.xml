@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#23213f"
+    android:background="@color/dashboardBackground"
     tools:context=".fragments.DashboardFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -16,7 +16,7 @@
             android:id="@+id/recycler_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="StaggeredGridLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+            app:layoutManager="StaggeredGridLayoutManager" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
